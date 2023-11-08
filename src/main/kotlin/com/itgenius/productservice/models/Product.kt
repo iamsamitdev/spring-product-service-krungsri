@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size
 data class Product(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     var id: Int = 0,
 
