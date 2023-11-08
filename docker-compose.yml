@@ -1,0 +1,33 @@
+version: '3.9'
+
+networks:
+  web_network:
+    name: project_web_network
+    driver: bridge
+
+services:
+  mysqldb:
+    image: mysql:8.2
+    container_name: product_mysql_db
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345678
+      - MYSQL_DATABASE=productdb
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=12345678
+    ports:
+      - "3660:3306"
+    restart: always
+    networks:
+      - web_network
+  app:
+    build: .
+    container_name: product_app_service
+    ports:
+      - "9191:8181"
+    depends_on:
+      - mysqldb
+    restart: always
+    networks:
+      - web_network
